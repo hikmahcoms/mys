@@ -381,7 +381,10 @@
       </div>
 
       <div id="dash-publish" class="dash-view active">
-        <div class="form-group"><label>Headline Title</label><input type="text" id="dashNewsTitle" placeholder="Write a compelling headline"></div>
+        <div class="form-group">
+          <label>Headline Title</label>
+          <input type="text" id="dashNewsTitle" placeholder="Write a compelling headline">
+        </div>
         <div class="form-group">
           <label>Category</label>
           <select id="dashNewsCat">
@@ -400,7 +403,7 @@
         <div class="form-group">
           <label>Add Ticker Item</label>
           <div style="display:flex; gap:10px;">
-            <input type="text" id="dashTickerInput" placeholder="e.g. Sultan declares holiday">
+            <input type="text" id="dashTickerInput" placeholder="e.g. Sultan declares public holiday">
             <button class="btn-submit" style="width:100px;" onclick="addTickerItem()">Add +</button>
           </div>
         </div>
@@ -460,44 +463,80 @@
     </div>
   </div>
 
+  <!-- Firebase SDKs & Configuration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsFKmZA1SMU5JDO_lR4mDBX8tqbovrjsk",
+      authDomain: "hikmah-news.firebaseapp.com",
+      projectId: "hikmah-news",
+      storageBucket: "hikmah-news.firebasestorage.app",
+      messagingSenderId: "236875991191",
+      appId: "1:236875991191:web:ec2a8069c3134d1ccf01d2",
+      measurementId: "G-P6XPQCK0KM"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+    // Make db and collection functions globally accessible for our UI scripts
+    window.db = db;
+    window.collection = collection;
+    window.addDoc = addDoc;
+    window.getDocs = getDocs;
+    window.deleteDoc = deleteDoc;
+    window.doc = doc;
+
+    // Load data from Firestore on startup
+    window.loadFromFirestore();
+  </script>
+
   <script>
     const today = new Date();
     document.getElementById('currentDate').innerText = today.toLocaleDateString('en-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
     let state = {
-      news: JSON.parse(localStorage.getItem('hikmah_news')) || [],
-      ticker: JSON.parse(localStorage.getItem('hikmah_ticker')) || [],
-      reels: JSON.parse(localStorage.getItem('hikmah_reels')) || [],
-      announce: JSON.parse(localStorage.getItem('hikmah_announce')) || [],
-      notice: JSON.parse(localStorage.getItem('hikmah_notice')) || [],
-      docs: JSON.parse(localStorage.getItem('hikmah_docs')) || [],
-      live: JSON.parse(localStorage.getItem('hikmah_live')) || null
+      news: [],
+      ticker: [],
+      reels: [],
+      announce: [],
+      notice: [],
+      docs: [],
+      live: null
     };
 
-    function saveState() {
-      localStorage.setItem('hikmah_news', JSON.stringify(state.news));
-      localStorage.setItem('hikmah_ticker', JSON.stringify(state.ticker));
-      localStorage.setItem('hikmah_reels', JSON.stringify(state.reels));
-      localStorage.setItem('hikmah_announce', JSON.stringify(state.announce));
-      localStorage.setItem('hikmah_notice', JSON.stringify(state.notice));
-      localStorage.setItem('hikmah_docs', JSON.stringify(state.docs));
-      localStorage.setItem('hikmah_live', JSON.stringify(state.live));
-      renderAll();
+    async function loadFromFirestore() {
+      if(!window.db) return setTimeout(loadFromFirestore, 200);
+      try {
+        const querySnapshot = await window.getDocs(window.collection(window.db, "hikmah_data"));
+        querySnapshot.forEach((docSnap) => {
+          const d = docSnap.data();
+          state[d.type] = d.items || [];
+          if(d.type === 'live') state.live = d.item || null;
+        });
+        renderAll();
+      } catch (err) {
+        console.log("Error loading from Firestore: ", err);
+      }
+    }
+    window.loadFromFirestore = loadFromFirestore;
+
+    async function saveFirestoreType(type, items, itemObj = null) {
+      try {
+        // We will store each type as a single document in 'hikmah_data' collection
+        const docRef = window.doc(window.db, "hikmah_data", type);
+        await window.setDoc ? null : window.addDoc; // fallback safety
+        // To simplify, let's just use addDoc or update standard collection
+      } catch(e) {
+        console.log(e);
+      }
     }
 
-    window.addEventListener('storage', (e) => {
-      if (e.key && e.key.startsWith('hikmah_')) {
-        state.news = JSON.parse(localStorage.getItem('hikmah_news')) || [];
-        state.ticker = JSON.parse(localStorage.getItem('hikmah_ticker')) || [];
-        state.reels = JSON.parse(localStorage.getItem('hikmah_reels')) || [];
-        state.announce = JSON.parse(localStorage.getItem('hikmah_announce')) || [];
-        state.notice = JSON.parse(localStorage.getItem('hikmah_notice')) || [];
-        state.docs = JSON.parse(localStorage.getItem('hikmah_docs')) || [];
-        state.live = JSON.parse(localStorage.getItem('hikmah_live')) || null;
-        renderAll();
-      }
-    });
-
+    // Fallback/Local UI State Renderers
     function renderAll() {
       renderTicker();
       renderNews();
@@ -684,6 +723,7 @@
       openModal('articleModal');
     }
 
+    // Publishing functions interacting with LocalStorage + Firebase ready structure
     function publishNews() {
       const title = document.getElementById('dashNewsTitle').value;
       const cat = document.getElementById('dashNewsCat').value;
@@ -693,7 +733,8 @@
       if(!title || !desc) return alert("Title and Content are required.");
       const newArticle = { id: 'news_' + Date.now(), title, cat, img, link, desc, date: today.toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase() };
       state.news.unshift(newArticle);
-      saveState(); alert('Article Published!');
+      localStorage.setItem('hikmah_news', JSON.stringify(state.news));
+      renderAll(); alert('Article Published!');
       document.getElementById('dashNewsTitle').value = ''; document.getElementById('dashNewsImg').value = ''; document.getElementById('dashNewsLink').value = ''; document.getElementById('dashNewsContent').value = '';
     }
 
@@ -712,39 +753,45 @@
       });
     }
     function removeTickerItem(index) { state.ticker.splice(index, 1); renderTickerPreview(); }
-    function publishTicker() { saveState(); alert('Ticker updated!'); }
+    function publishTicker() { localStorage.setItem('hikmah_ticker', JSON.stringify(state.ticker)); renderAll(); alert('Ticker updated!'); }
 
     function publishLive() {
       state.live = { title: document.getElementById('dashLiveTitle').value, desc: document.getElementById('dashLiveDesc').value, url: document.getElementById('dashLiveUrl').value };
-      saveState(); alert('Live Stream Updated!');
+      localStorage.setItem('hikmah_live', JSON.stringify(state.live));
+      renderAll(); alert('Live Stream Updated!');
     }
     function publishReel() {
       const title = document.getElementById('dashReelTitle').value; const url = document.getElementById('dashReelUrl').value;
       if(!title||!url) return;
       state.reels.unshift({ id: Date.now(), title, url });
-      saveState(); alert('Reel Published!');
+      localStorage.setItem('hikmah_reels', JSON.stringify(state.reels));
+      renderAll(); alert('Reel Published!');
     }
     function publishAnnounce() {
       const title = document.getElementById('dashAnnounceTitle').value; const desc = document.getElementById('dashAnnounceDesc').value;
       if(!title) return;
       state.announce.unshift({ id: Date.now(), title, desc });
-      saveState(); alert('Announcement Published!');
+      localStorage.setItem('hikmah_announce', JSON.stringify(state.announce));
+      renderAll(); alert('Announcement Published!');
     }
     function publishNotice() {
       const title = document.getElementById('dashNoticeTitle').value; const desc = document.getElementById('dashNoticeDesc').value;
       if(!title) return;
       state.notice.unshift({ id: Date.now(), title, desc });
-      saveState(); alert('Notice Published!');
+      localStorage.setItem('hikmah_notice', JSON.stringify(state.notice));
+      renderAll(); alert('Notice Published!');
     }
     function publishDoc() {
       const title = document.getElementById('dashDocTitle').value; const desc = document.getElementById('dashDocDesc').value; const url = document.getElementById('dashDocUrl').value;
       if(!title) return;
       state.docs.unshift({ id: Date.now(), title, desc, url });
-      saveState(); alert('Documentary Published!');
+      localStorage.setItem('hikmah_docs', JSON.stringify(state.docs));
+      renderAll(); alert('Documentary Published!');
     }
 
     function renderManageList() {
       const container = document.getElementById('manageListContainer');
+      if(!container) return;
       container.innerHTML = '';
       const makeRow = (type, item, index) => `<div class="list-item"><div><strong class="text-gold" style="text-transform:uppercase;">${type}</strong> | ${item.title || 'Item'}</div><button onclick="deleteItem('${type}', ${index})">Delete</button></div>`;
       state.news.forEach((n, i) => container.innerHTML += makeRow('News', n, i));
@@ -762,7 +809,15 @@
       else if(type === 'Notice') state.notice.splice(index, 1);
       else if(type === 'Doc') state.docs.splice(index, 1);
       else if(type === 'Live') state.live = null;
-      saveState();
+      
+      localStorage.setItem('hikmah_news', JSON.stringify(state.news));
+      localStorage.setItem('hikmah_ticker', JSON.stringify(state.ticker));
+      localStorage.setItem('hikmah_reels', JSON.stringify(state.reels));
+      localStorage.setItem('hikmah_announce', JSON.stringify(state.announce));
+      localStorage.setItem('hikmah_notice', JSON.stringify(state.notice));
+      localStorage.setItem('hikmah_docs', JSON.stringify(state.docs));
+      localStorage.setItem('hikmah_live', JSON.stringify(state.live));
+      renderAll();
     }
 
     function switchView(viewId, subCategory = null) {
