@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
 <style>
-  /* ===== COLOR TOKENS ===== */
   :root {
     --navy-bg: #091124;
     --navy-card: #111c3a;
@@ -21,123 +20,49 @@
     --radius: 8px;
     --transition: all 0.3s ease;
   }
-
-  /* ===== RESET & BASE ===== */
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { 
-    font-family: 'DM Sans', sans-serif; 
-    background-color: var(--navy-bg); 
-    color: var(--text-main); 
-    line-height: 1.6; 
-  }
+  body { font-family: 'DM Sans', sans-serif; background-color: var(--navy-bg); color: var(--text-main); line-height: 1.6; }
   a { color: inherit; text-decoration: none; transition: var(--transition); }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
   img { max-width: 100%; display: block; }
-  
-  /* Typography */
   h1, h2, h3, .serif { font-family: 'DM Serif Display', serif; font-weight: normal; }
   .text-gold { color: var(--gold-primary); }
 
-  /* ===== TOPBAR ===== */
-  .topbar {
-    background: #050a15;
-    padding: 8px 5%;
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
+  .topbar { background: #050a15; padding: 8px 5%; display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); }
   .topbar-right button { color: var(--gold-primary); margin-left: 15px; transition: var(--transition); }
   .topbar-right button:hover { color: var(--text-main); }
 
-  /* ===== HEADER & NAVIGATION ===== */
-  header {
-    background: var(--navy-card);
-    padding: 0 5%;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 80px;
-  }
+  header { background: var(--navy-card); padding: 0 5%; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; height: 80px; }
   .brand { display: flex; align-items: center; gap: 15px; cursor: pointer; overflow: hidden; }
-  
-  .brand-logo-container {
-    width: 45px; height: 45px;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--navy-bg); border-radius: 4px; overflow: hidden;
-  }
+  .brand-logo-container { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: var(--navy-bg); border-radius: 4px; overflow: hidden; }
   .brand-logo { width: 100%; height: 100%; object-fit: contain; }
-  
   .brand-text { display: flex; flex-direction: column; }
   .brand-text strong { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--gold-primary); letter-spacing: 0.5px; line-height: 1;}
   .brand-text small { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px;}
 
   nav { display: flex; gap: 20px; height: 100%; align-items: center; }
   .nav-item { position: relative; height: 100%; display: flex; align-items: center; }
-  .nav-item > button {
-    font-size: 14px; font-weight: 500; color: var(--text-main);
-    padding: 10px; transition: var(--transition);
-    display: flex; align-items: center; gap: 5px; white-space: nowrap;
-  }
+  .nav-item > button { font-size: 14px; font-weight: 500; color: var(--text-main); padding: 10px; transition: var(--transition); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
   .nav-item > button:hover, .nav-item > button.active { color: var(--gold-primary); }
   
-  .dropdown {
-    position: absolute; top: 80px; left: 0;
-    background: var(--navy-card);
-    border: 1px solid var(--navy-border);
-    border-top: none;
-    min-width: 200px;
-    opacity: 0; visibility: hidden;
-    transform: translateY(10px);
-    transition: var(--transition);
-    border-radius: 0 0 var(--radius) var(--radius);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    overflow: hidden;
-  }
+  .dropdown { position: absolute; top: 80px; left: 0; background: var(--navy-card); border: 1px solid var(--navy-border); border-top: none; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: var(--transition); border-radius: 0 0 var(--radius) var(--radius); box-shadow: 0 10px 25px rgba(0,0,0,0.5); overflow: hidden; }
   .nav-item:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
-  .dropdown button {
-    display: block; width: 100%; text-align: left; padding: 12px 20px;
-    font-size: 14px; color: var(--text-main); border-bottom: 1px solid var(--navy-border);
-    transition: var(--transition);
-  }
+  .dropdown button { display: block; width: 100%; text-align: left; padding: 12px 20px; font-size: 14px; color: var(--text-main); border-bottom: 1px solid var(--navy-border); transition: var(--transition); }
   .dropdown button:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold-primary); padding-left: 25px; }
 
-  /* Login Button */
-  .btn-login {
-    background: var(--gold-primary); color: #000;
-    padding: 10px 20px; font-weight: 600; border-radius: 30px;
-    transition: var(--transition); font-size: 14px;
-  }
+  .btn-login { background: var(--gold-primary); color: #000; padding: 10px 20px; font-weight: 600; border-radius: 30px; transition: var(--transition); font-size: 14px; }
   .btn-login:hover { background: var(--gold-hover); transform: translateY(-2px); }
 
-  /* Live Indicator */
-  .live-dot {
-    display: inline-block; width: 8px; height: 8px;
-    background-color: var(--red-live); border-radius: 50%;
-    margin-right: 6px; animation: blink 1.5s infinite;
-  }
+  .live-dot { display: inline-block; width: 8px; height: 8px; background-color: var(--red-live); border-radius: 50%; margin-right: 6px; animation: blink 1.5s infinite; }
   @keyframes blink { 50% { opacity: 0.4; transform: scale(1.2); } }
 
-  /* ===== TICKER (YELLOW LINE) ===== */
-  .ticker {
-    background: var(--gold-primary); color: var(--navy-bg);
-    padding: 0 5%; height: 35px; font-size: 13px; font-weight: 600;
-    display: flex; align-items: center; border-top: 1px solid rgba(0,0,0,0.1);
-  }
-  .ticker-label { 
-    flex-shrink: 0; padding-right: 15px; border-right: 1px solid rgba(0,0,0,0.2); 
-    text-transform: uppercase; letter-spacing: 1px; background: var(--gold-primary);
-    z-index: 2; display: flex; align-items: center; height: 100%;
-  }
+  .ticker { background: var(--gold-primary); color: var(--navy-bg); padding: 0 5%; height: 35px; font-size: 13px; font-weight: 600; display: flex; align-items: center; border-top: 1px solid rgba(0,0,0,0.1); }
+  .ticker-label { flex-shrink: 0; padding-right: 15px; border-right: 1px solid rgba(0,0,0,0.2); text-transform: uppercase; letter-spacing: 1px; background: var(--gold-primary); z-index: 2; display: flex; align-items: center; height: 100%; }
   .ticker-scroll-area { flex: 1; overflow: hidden; height: 100%; display: flex; align-items: center; margin-left: 15px; }
   .ticker-content { display: flex; gap: 40px; animation: scroll 30s linear infinite; white-space: nowrap; }
   @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-  /* ===== MAIN CONTAINER ===== */
   main { padding: 40px 5%; min-height: 70vh; }
   .view-section { display: none; animation: fadeIn 0.4s ease; }
   .view-section.active { display: block; }
@@ -145,16 +70,10 @@
   .info-tab-content.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ===== COMPONENTS ===== */
   .section-title { font-size: 28px; margin-bottom: 25px; color: var(--gold-primary); border-bottom: 1px solid var(--navy-border); padding-bottom: 15px;}
   
-  /* Cards */
   .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
-  .card {
-    background: var(--navy-card); border: 1px solid var(--navy-border); cursor: pointer;
-    border-radius: var(--radius); overflow: hidden; transition: var(--transition);
-    display: flex; flex-direction: column;
-  }
+  .card { background: var(--navy-card); border: 1px solid var(--navy-border); cursor: pointer; border-radius: var(--radius); overflow: hidden; transition: var(--transition); display: flex; flex-direction: column; }
   .card:hover { border-color: var(--gold-primary); transform: translateY(-5px); }
   .card-img { height: 180px; background: #1a2952; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;}
   .card-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -167,17 +86,8 @@
   .card-meta { font-size: 12px; color: var(--text-muted); display: flex; justify-content: space-between; margin-top: auto;}
   .empty-msg { grid-column: 1/-1; color: var(--text-muted); font-style: italic; }
 
-  /* Hero Banner */
-  .hero-banner {
-    display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 50px;
-    background: var(--navy-bg);
-    border: 1px solid var(--navy-border); border-radius: var(--radius); overflow: hidden;
-    min-height: 400px;
-  }
-  .hero-content {
-    padding: 50px; display: flex; flex-direction: column; justify-content: center;
-    background: var(--navy-card); 
-  }
+  .hero-banner { display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 50px; background: var(--navy-bg); border: 1px solid var(--navy-border); border-radius: var(--radius); overflow: hidden; min-height: 400px; }
+  .hero-content { padding: 50px; display: flex; flex-direction: column; justify-content: center; background: var(--navy-card); }
   .hero-kicker { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-primary); margin-bottom: 20px; font-weight: 600;}
   .hero-content h1 { font-size: 42px; line-height: 1.1; margin: 0 0 20px 0; color: var(--text-main); }
   .hero-content h1 span { color: var(--gold-primary); font-style: italic; }
@@ -187,11 +97,7 @@
   .author-info { display: flex; gap: 15px; align-items: center; color: var(--text-muted); }
   .author-info strong { color: var(--text-main); }
   .hero-image { background-color: #1a2952; background-size: cover; background-position: center; position: relative; }
-  .hero-image-caption {
-    position: absolute; bottom: 20px; left: 20px; right: 20px;
-    display: flex; justify-content: space-between;
-    font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-  }
+  .hero-image-caption { position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
 
   @media (max-width: 768px) {
     .hero-banner { grid-template-columns: 1fr; }
@@ -200,43 +106,26 @@
     .hero-content h1 { font-size: 32px; }
   }
 
-  /* Tabs */
   .tab-container { margin-bottom: 30px; display: flex; gap: 10px; border-bottom: 1px solid var(--navy-border); padding-bottom: 10px; overflow-x: auto;}
   .tab-btn { padding: 8px 18px; color: var(--text-muted); font-size: 14px; border-radius: 20px; transition: var(--transition); border: 1px solid transparent; white-space: nowrap;}
   .tab-btn.active, .tab-btn:hover { color: var(--gold-primary); border-color: var(--gold-primary); background: rgba(212, 175, 55, 0.05); }
 
-  /* Reels Grid */
   .reels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
   .reel-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: var(--radius); overflow: hidden; }
   .reel-video { position: relative; padding-bottom: 177%; background: #000; }
   .reel-video iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
   .reel-meta { padding: 12px; font-size: 14px; font-family: 'DM Serif Display', serif; }
 
-  /* ===== MODALS ===== */
-  .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(4, 9, 20, 0.9); z-index: 2000;
-    display: none; align-items: center; justify-content: center;
-  }
+  .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4, 9, 20, 0.9); z-index: 2000; display: none; align-items: center; justify-content: center; }
   .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
-  .modal-content {
-    background: var(--navy-card); width: 90%; max-width: 600px;
-    border-radius: var(--radius); border-top: 4px solid var(--gold-primary);
-    padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); position: relative;
-    max-height: 90vh; overflow-y: auto;
-  }
+  .modal-content { background: var(--navy-card); width: 90%; max-width: 600px; border-radius: var(--radius); border-top: 4px solid var(--gold-primary); padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); position: relative; max-height: 90vh; overflow-y: auto; }
   .modal-close { position: absolute; top: 15px; right: 20px; font-size: 24px; color: var(--text-muted); cursor: pointer; }
   .modal-close:hover { color: var(--red-live); }
   
   .form-group { margin-bottom: 20px; }
   .form-group label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; }
-  .form-group input, .form-group textarea, .form-group select {
-    width: 100%; padding: 12px 15px; background: var(--navy-bg);
-    border: 1px solid var(--navy-border); border-radius: 4px; color: var(--text-main); font-family: inherit; font-size: 14px;
-  }
-  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-    outline: none; border-color: var(--gold-primary);
-  }
+  .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px 15px; background: var(--navy-bg); border: 1px solid var(--navy-border); border-radius: 4px; color: var(--text-main); font-family: inherit; font-size: 14px; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--gold-primary); }
   .btn-submit { width: 100%; background: var(--gold-primary); color: #000; font-weight: bold; padding: 12px; font-size: 15px; border-radius: 4px; transition: var(--transition); }
   .btn-submit:hover { background: var(--gold-hover); }
 
@@ -244,26 +133,17 @@
   .dash-view { display: none; }
   .dash-view.active { display: block; }
   
-  .list-item { 
-    display: flex; justify-content: space-between; align-items: center;
-    background: var(--navy-bg); padding: 12px; margin-bottom: 8px; 
-    border: 1px dashed var(--navy-border); border-radius: 4px; font-size: 13px;
-  }
+  .list-item { display: flex; justify-content: space-between; align-items: center; background: var(--navy-bg); padding: 12px; margin-bottom: 8px; border: 1px dashed var(--navy-border); border-radius: 4px; font-size: 13px; }
   .list-item button { color: var(--red-live); font-size: 12px; font-weight: bold; background: rgba(239, 68, 68, 0.1); padding: 5px 10px; border-radius: 4px; transition: var(--transition);}
   .list-item button:hover { background: var(--red-live); color: white; }
 
-  /* ===== ARTICLE MODAL ===== */
   .article-modal { max-width: 700px; padding: 40px; }
   .article-modal h1 { font-size: 32px; color: var(--gold-primary); margin-bottom: 15px; line-height: 1.2;}
   .article-modal-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 25px; display: flex; gap: 15px;}
   .article-modal-img { width: 100%; max-height: 350px; object-fit: cover; border-radius: var(--radius); margin-bottom: 25px; display: none;}
   .article-modal-content { font-size: 16px; line-height: 1.8; color: var(--text-main); white-space: pre-line; }
 
-  /* ===== FOOTER ===== */
-  footer {
-    background: #050a15; border-top: 1px solid var(--navy-border);
-    padding: 40px 5% 20px; text-align: center; color: var(--text-muted);
-  }
+  footer { background: #050a15; border-top: 1px solid var(--navy-border); padding: 40px 5% 20px; text-align: center; color: var(--text-muted); }
   .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 40px; text-align: left; }
   .footer-col h3 { color: var(--gold-primary); margin-bottom: 20px; font-size: 18px; }
   .footer-col a { display: block; color: var(--text-muted); margin-bottom: 10px; font-size: 14px; cursor: pointer; }
@@ -330,19 +210,13 @@
   <div class="ticker">
     <div class="ticker-label"><span class="live-dot" style="background-color: var(--navy-bg);"></span> LIVE BRIEFING</div>
     <div class="ticker-scroll-area">
-      <div class="ticker-content" id="publicTickerText">
-        <!-- Filled by JS -->
-      </div>
+      <div class="ticker-content" id="publicTickerText"></div>
     </div>
   </div>
 
   <main>
-    <!-- ===== HOME VIEW ===== -->
     <div id="home" class="view-section active">
-      
-      <div class="hero-banner" id="heroBanner">
-        <!-- Rendered by JS -->
-      </div>
+      <div class="hero-banner" id="heroBanner"></div>
 
       <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; margin-top: 50px;">
         <div>
@@ -358,19 +232,14 @@
 
         <div>
           <h2 class="section-title">Latest News</h2>
-          <div style="display: flex; flex-direction: column; gap: 15px;" id="homeLatestNews">
-            <!-- Filled by JS -->
-          </div>
+          <div style="display: flex; flex-direction: column; gap: 15px;" id="homeLatestNews"></div>
         </div>
       </div>
 
       <h2 class="section-title" style="margin-top: 50px;">Hikmah Reels</h2>
-      <div id="home-reels-grid" class="reels-grid">
-         <!-- Filled by JS -->
-      </div>
+      <div id="home-reels-grid" class="reels-grid"></div>
     </div>
 
-    <!-- ===== NEWS VIEW ===== -->
     <div id="news" class="view-section">
       <h1 class="section-title">Newsroom <span id="news-category-label" style="color: var(--text-main); font-size: 20px;">- All</span></h1>
       <div class="tab-container">
@@ -385,12 +254,9 @@
         <button class="tab-btn" onclick="filterCategory('Hikmah Economy', this)">Economy</button>
         <button class="tab-btn" onclick="filterCategory('Hikmah Highlights', this)">Highlights</button>
       </div>
-      <div class="card-grid" id="dynamic-news-grid">
-        <!-- Filled by JS -->
-      </div>
+      <div class="card-grid" id="dynamic-news-grid"></div>
     </div>
 
-    <!-- ===== INFORMATION VIEW ===== -->
     <div id="information" class="view-section">
       <h1 class="section-title">Information Center</h1>
       <div class="tab-container">
@@ -415,7 +281,6 @@
       </div>
     </div>
 
-    <!-- ===== ABOUT US VIEW ===== -->
     <div id="about" class="view-section">
       <h1 class="section-title">About Hikmah Communication</h1>
       <div class="tab-container">
@@ -515,43 +380,27 @@
         <button class="tab-btn" onclick="switchDashTab('manage', this)" style="border: 1px solid var(--red-live);">⚙️ Manage</button>
       </div>
 
-      <!-- Dash Tab: News -->
       <div id="dash-publish" class="dash-view active">
+        <div class="form-group"><label>Headline Title</label><input type="text" id="dashNewsTitle" placeholder="Write a compelling headline"></div>
         <div class="form-group">
-          <label>Headline Title</label>
-          <input type="text" id="dashNewsTitle" placeholder="Write a compelling headline">
+          <label>Category</label>
+          <select id="dashNewsCat">
+            <option>Hikmah Sport</option><option>Hikmah Bayan</option><option>Hikmah Insider</option>
+            <option>Hikmah Insight</option><option>Hikmah Politics</option><option>Hikmah Election</option>
+            <option>Hikmah Syafaqah</option><option>Hikmah Economy</option><option>Hikmah Highlights</option>
+          </select>
         </div>
-        <div style="display: flex; gap: 15px;">
-          <div class="form-group" style="flex: 1;">
-            <label>Category</label>
-            <select id="dashNewsCat">
-              <option>Hikmah Sport</option><option>Hikmah Bayan</option><option>Hikmah Insider</option>
-              <option>Hikmah Insight</option><option>Hikmah Politics</option><option>Hikmah Election</option>
-              <option>Hikmah Syafaqah</option><option>Hikmah Economy</option><option>Hikmah Highlights</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Thumbnail Image URL (Website Read)</label>
-          <input type="text" id="dashNewsImg" placeholder="https://... (Leave blank if none)">
-        </div>
-        <div class="form-group">
-          <label>External Link URL (Click Headline)</label>
-          <input type="text" id="dashNewsLink" placeholder="https://... (Optional)">
-        </div>
-        <div class="form-group">
-          <label>Article Content / Standfirst</label>
-          <textarea id="dashNewsContent" rows="4" placeholder="Full article content or brief description..."></textarea>
-        </div>
+        <div class="form-group"><label>Thumbnail Image URL</label><input type="text" id="dashNewsImg" placeholder="https://..."></div>
+        <div class="form-group"><label>External Link URL (Click Headline)</label><input type="text" id="dashNewsLink" placeholder="https://... (Optional)"></div>
+        <div class="form-group"><label>Article Content</label><textarea id="dashNewsContent" rows="4" placeholder="Full content..."></textarea></div>
         <button class="btn-submit" onclick="publishNews()">Publish Article ↗</button>
       </div>
 
-      <!-- Dash Tab: Ticker -->
       <div id="dash-ticker" class="dash-view">
         <div class="form-group">
           <label>Add Ticker Item</label>
           <div style="display:flex; gap:10px;">
-            <input type="text" id="dashTickerInput" placeholder="e.g. Sultan declares public holiday">
+            <input type="text" id="dashTickerInput" placeholder="e.g. Sultan declares holiday">
             <button class="btn-submit" style="width:100px;" onclick="addTickerItem()">Add +</button>
           </div>
         </div>
@@ -559,58 +408,49 @@
         <button class="btn-submit" onclick="publishTicker()">Update Website Ticker ↗</button>
       </div>
 
-      <!-- Dash Tab: Live Update -->
       <div id="dash-live-update" class="dash-view">
-        <div class="form-group"><label>Live Title</label><input type="text" id="dashLiveTitle" placeholder="e.g. Parliament Live"></div>
-        <div class="form-group"><label>Details</label><input type="text" id="dashLiveDesc" placeholder="Brief description..."></div>
-        <div class="form-group"><label>YouTube URL / Video ID</label><input type="text" id="dashLiveUrl" placeholder="e.g. ScMzIvxBSi4"></div>
+        <div class="form-group"><label>Live Title</label><input type="text" id="dashLiveTitle" placeholder="Parliament Live"></div>
+        <div class="form-group"><label>Details</label><input type="text" id="dashLiveDesc" placeholder="Description..."></div>
+        <div class="form-group"><label>YouTube ID</label><input type="text" id="dashLiveUrl" placeholder="ScMzIvxBSi4"></div>
         <button class="btn-submit" onclick="publishLive()">Push Live Update ↗</button>
       </div>
 
-      <!-- Dash Tab: Reels -->
       <div id="dash-reels" class="dash-view">
-        <div class="form-group"><label>Reel Title</label><input type="text" id="dashReelTitle" placeholder="Short title"></div>
-        <div class="form-group"><label>YouTube Shorts ID</label><input type="text" id="dashReelUrl" placeholder="e.g. jNQXAC9IVRw"></div>
+        <div class="form-group"><label>Reel Title</label><input type="text" id="dashReelTitle" placeholder="Title"></div>
+        <div class="form-group"><label>YouTube Shorts ID</label><input type="text" id="dashReelUrl" placeholder="jNQXAC9IVRw"></div>
         <button class="btn-submit" onclick="publishReel()">Publish Reel ↗</button>
       </div>
 
-      <!-- Dash Tab: Announce -->
       <div id="dash-announce" class="dash-view">
-        <div class="form-group"><label>Announcement Title</label><input type="text" id="dashAnnounceTitle" placeholder="Important Notice"></div>
-        <div class="form-group"><label>Details</label><textarea id="dashAnnounceDesc" rows="4" placeholder="Type here..."></textarea></div>
+        <div class="form-group"><label>Announcement Title</label><input type="text" id="dashAnnounceTitle" placeholder="Notice Title"></div>
+        <div class="form-group"><label>Details</label><textarea id="dashAnnounceDesc" rows="4" placeholder="Details..."></textarea></div>
         <button class="btn-submit" onclick="publishAnnounce()">Publish Announcement ↗</button>
       </div>
 
-      <!-- Dash Tab: Notice -->
       <div id="dash-notice" class="dash-view">
-        <div class="form-group"><label>Notice Title</label><input type="text" id="dashNoticeTitle" placeholder="Site Notice"></div>
-        <div class="form-group"><label>Details</label><textarea id="dashNoticeDesc" rows="4" placeholder="Type here..."></textarea></div>
+        <div class="form-group"><label>Notice Title</label><input type="text" id="dashNoticeTitle" placeholder="Notice Title"></div>
+        <div class="form-group"><label>Details</label><textarea id="dashNoticeDesc" rows="4" placeholder="Details..."></textarea></div>
         <button class="btn-submit" onclick="publishNotice()">Publish Notice ↗</button>
       </div>
 
-      <!-- Dash Tab: Doc -->
       <div id="dash-doc" class="dash-view">
-        <div class="form-group"><label>Doc Title</label><input type="text" id="dashDocTitle" placeholder="Documentary Title"></div>
-        <div class="form-group"><label>Description</label><input type="text" id="dashDocDesc" placeholder="Short desc..."></div>
-        <div class="form-group"><label>YouTube Link</label><input type="text" id="dashDocUrl" placeholder="https://youtube.com/..."></div>
+        <div class="form-group"><label>Doc Title</label><input type="text" id="dashDocTitle" placeholder="Title"></div>
+        <div class="form-group"><label>Description</label><input type="text" id="dashDocDesc" placeholder="Desc..."></div>
+        <div class="form-group"><label>YouTube Link</label><input type="text" id="dashDocUrl" placeholder="https://..."></div>
         <button class="btn-submit" onclick="publishDoc()">Publish Documentary ↗</button>
       </div>
 
-      <!-- Dash Tab: Manage -->
       <div id="dash-manage" class="dash-view">
-        <div style="max-height: 400px; overflow-y:auto; padding-right: 10px;" id="manageListContainer">
-          <!-- Filled by JS -->
-        </div>
+        <div style="max-height: 400px; overflow-y:auto; padding-right: 10px;" id="manageListContainer"></div>
       </div>
     </div>
   </div>
 
-  <!-- ARTICLE READER MODAL (INTERNAL) -->
   <div class="modal-overlay" id="articleModal">
     <div class="modal-content article-modal">
       <span class="modal-close" onclick="closeModal('articleModal')">×</span>
-      <div id="articleModalCategory" style="color: var(--gold-primary); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; font-weight:bold;">Category</div>
-      <h1 id="articleModalTitle">Article Title</h1>
+      <div id="articleModalCategory" style="color: var(--gold-primary); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; font-weight:bold;"></div>
+      <h1 id="articleModalTitle"></h1>
       <div class="article-modal-meta">
         <span>By Hikmah Desk</span>
         <span id="articleModalDate"></span>
@@ -621,11 +461,9 @@
   </div>
 
   <script>
-    // ===== DATE =====
     const today = new Date();
     document.getElementById('currentDate').innerText = today.toLocaleDateString('en-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-    // ===== STATE MANAGEMENT (Local Storage & Cross-Tab Sync) =====
     let state = {
       news: JSON.parse(localStorage.getItem('hikmah_news')) || [],
       ticker: JSON.parse(localStorage.getItem('hikmah_ticker')) || [],
@@ -647,7 +485,6 @@
       renderAll();
     }
 
-    // Listen to storage changes across tabs instantly
     window.addEventListener('storage', (e) => {
       if (e.key && e.key.startsWith('hikmah_')) {
         state.news = JSON.parse(localStorage.getItem('hikmah_news')) || [];
@@ -661,7 +498,6 @@
       }
     });
 
-    // ===== RENDER FUNCTIONS =====
     function renderAll() {
       renderTicker();
       renderNews();
@@ -685,7 +521,6 @@
     }
 
     function renderNews() {
-      // 1. Render Hero Banner (Latest News)
       const hero = document.getElementById('heroBanner');
       if (state.news.length > 0) {
         const latest = state.news[0];
@@ -710,7 +545,6 @@
         `;
       }
 
-      // 2. Render Home Latest (Next 3)
       const homeLatest = document.getElementById('homeLatestNews');
       homeLatest.innerHTML = '';
       if(state.news.length === 0) {
@@ -730,13 +564,11 @@
         });
       }
 
-      // 3. Trigger category filter to refresh main news grid
       const activeBtn = document.querySelector('#news .tab-btn.active');
       filterCategory(activeBtn ? activeBtn.innerText.trim() : 'All');
     }
 
     function renderLive() {
-      const container = document.getElementById('home-live-container');
       if(state.live && state.live.title) {
         document.getElementById('home-live-title').innerText = state.live.title;
         document.getElementById('home-live-desc').innerText = state.live.desc;
@@ -802,13 +634,11 @@
       });
     }
 
-    // ===== NEWS FILTER & ARTICLE READER =====
     function filterCategory(cat, btnElement = null) {
       if(btnElement){
         document.querySelectorAll('#news .tab-btn').forEach(el => el.classList.remove('active'));
         btnElement.classList.add('active');
       }
-      
       let fullCat = cat;
       if(cat !== 'All' && !cat.includes('Hikmah')) fullCat = 'Hikmah ' + cat;
 
@@ -827,7 +657,6 @@
         const titleHtml = n.link 
           ? `<a href="${n.link}" target="_blank" onclick="event.stopPropagation()" class="headline-link">${n.title}</a>`
           : `<span style="color:var(--text-main);">${n.title}</span>`;
-          
         let imgHtml = n.img ? `<div class="card-img"><img src="${n.img}"></div>` : '';
 
         grid.innerHTML += `
@@ -846,50 +675,28 @@
     function openInternalArticle(id) {
       const article = state.news.find(n => n.id === id);
       if(!article) return;
-      
       document.getElementById('articleModalCategory').innerText = article.cat;
       document.getElementById('articleModalTitle').innerText = article.title;
       document.getElementById('articleModalDate').innerText = article.date;
       document.getElementById('articleModalContent').innerText = article.desc;
-      
       const imgEl = document.getElementById('articleModalImage');
-      if(article.img) {
-        imgEl.src = article.img;
-        imgEl.style.display = 'block';
-      } else {
-        imgEl.style.display = 'none';
-      }
-      
+      if(article.img) { imgEl.src = article.img; imgEl.style.display = 'block'; } else { imgEl.style.display = 'none'; }
       openModal('articleModal');
     }
 
-    // ===== PUBLISH ACTIONS =====
     function publishNews() {
       const title = document.getElementById('dashNewsTitle').value;
       const cat = document.getElementById('dashNewsCat').value;
       const img = document.getElementById('dashNewsImg').value;
       const link = document.getElementById('dashNewsLink').value;
       const desc = document.getElementById('dashNewsContent').value;
-      
       if(!title || !desc) return alert("Title and Content are required.");
-
-      const newArticle = {
-        id: 'news_' + Date.now(),
-        title, cat, img, link, desc,
-        date: today.toLocaleDateString('en-MY', shortDateOptions)
-      };
-      
+      const newArticle = { id: 'news_' + Date.now(), title, cat, img, link, desc, date: today.toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase() };
       state.news.unshift(newArticle);
-      saveState();
-      alert('Article Published!');
-      
-      document.getElementById('dashNewsTitle').value = '';
-      document.getElementById('dashNewsImg').value = '';
-      document.getElementById('dashNewsLink').value = '';
-      document.getElementById('dashNewsContent').value = '';
+      saveState(); alert('Article Published!');
+      document.getElementById('dashNewsTitle').value = ''; document.getElementById('dashNewsImg').value = ''; document.getElementById('dashNewsLink').value = ''; document.getElementById('dashNewsContent').value = '';
     }
 
-    // Ticker Builder
     function addTickerItem() {
       const val = document.getElementById('dashTickerInput').value;
       if(!val.trim()) return;
@@ -908,58 +715,38 @@
     function publishTicker() { saveState(); alert('Ticker updated!'); }
 
     function publishLive() {
-      state.live = {
-        title: document.getElementById('dashLiveTitle').value,
-        desc: document.getElementById('dashLiveDesc').value,
-        url: document.getElementById('dashLiveUrl').value
-      };
+      state.live = { title: document.getElementById('dashLiveTitle').value, desc: document.getElementById('dashLiveDesc').value, url: document.getElementById('dashLiveUrl').value };
       saveState(); alert('Live Stream Updated!');
     }
-
     function publishReel() {
-      const title = document.getElementById('dashReelTitle').value;
-      const url = document.getElementById('dashReelUrl').value;
+      const title = document.getElementById('dashReelTitle').value; const url = document.getElementById('dashReelUrl').value;
       if(!title||!url) return;
       state.reels.unshift({ id: Date.now(), title, url });
       saveState(); alert('Reel Published!');
     }
-
     function publishAnnounce() {
-      const title = document.getElementById('dashAnnounceTitle').value;
-      const desc = document.getElementById('dashAnnounceDesc').value;
+      const title = document.getElementById('dashAnnounceTitle').value; const desc = document.getElementById('dashAnnounceDesc').value;
       if(!title) return;
       state.announce.unshift({ id: Date.now(), title, desc });
       saveState(); alert('Announcement Published!');
     }
-
     function publishNotice() {
-      const title = document.getElementById('dashNoticeTitle').value;
-      const desc = document.getElementById('dashNoticeDesc').value;
+      const title = document.getElementById('dashNoticeTitle').value; const desc = document.getElementById('dashNoticeDesc').value;
       if(!title) return;
       state.notice.unshift({ id: Date.now(), title, desc });
       saveState(); alert('Notice Published!');
     }
-
     function publishDoc() {
-      const title = document.getElementById('dashDocTitle').value;
-      const desc = document.getElementById('dashDocDesc').value;
-      const url = document.getElementById('dashDocUrl').value;
+      const title = document.getElementById('dashDocTitle').value; const desc = document.getElementById('dashDocDesc').value; const url = document.getElementById('dashDocUrl').value;
       if(!title) return;
       state.docs.unshift({ id: Date.now(), title, desc, url });
       saveState(); alert('Documentary Published!');
     }
 
-    // ===== MANAGE (DELETE) =====
     function renderManageList() {
       const container = document.getElementById('manageListContainer');
       container.innerHTML = '';
-      
-      const makeRow = (type, item, index) => `
-        <div class="list-item">
-          <div><strong class="text-gold" style="text-transform:uppercase;">${type}</strong> | ${item.title || 'Item'}</div>
-          <button onclick="deleteItem('${type}', ${index})">Delete</button>
-        </div>`;
-
+      const makeRow = (type, item, index) => `<div class="list-item"><div><strong class="text-gold" style="text-transform:uppercase;">${type}</strong> | ${item.title || 'Item'}</div><button onclick="deleteItem('${type}', ${index})">Delete</button></div>`;
       state.news.forEach((n, i) => container.innerHTML += makeRow('News', n, i));
       state.reels.forEach((r, i) => container.innerHTML += makeRow('Reel', r, i));
       state.announce.forEach((a, i) => container.innerHTML += makeRow('Announce', a, i));
@@ -968,20 +755,26 @@
       if(state.live && state.live.title) container.innerHTML += makeRow('Live', state.live, 0);
     }
 
-    // ===== VIEW/TAB LOGIC =====
+    function deleteItem(type, index) {
+      if(type === 'News') state.news.splice(index, 1);
+      else if(type === 'Reel') state.reels.splice(index, 1);
+      else if(type === 'Announce') state.announce.splice(index, 1);
+      else if(type === 'Notice') state.notice.splice(index, 1);
+      else if(type === 'Doc') state.docs.splice(index, 1);
+      else if(type === 'Live') state.live = null;
+      saveState();
+    }
+
     function switchView(viewId, subCategory = null) {
       document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
       document.getElementById(viewId).classList.add('active');
       document.querySelectorAll('nav .nav-item > button').forEach(el => el.classList.remove('active'));
       document.getElementById('btn-' + (viewId === 'information' ? 'info' : viewId)).classList.add('active');
-
       if (viewId === 'news') {
         if(subCategory) {
           let tabs = document.querySelectorAll('#news .tab-btn');
           tabs.forEach(tab => { if(tab.innerText.includes(subCategory.replace('Hikmah ', ''))) filterCategory(subCategory, tab); });
-        } else {
-          filterCategory('All', document.querySelector('#news .tab-btn'));
-        }
+        } else { filterCategory('All', document.querySelector('#news .tab-btn')); }
       }
       if (viewId === 'information' && subCategory) {
         let tabs = document.querySelectorAll('#information .tab-btn');
@@ -1000,14 +793,12 @@
       document.querySelectorAll('#information .info-tab-content').forEach(el => el.classList.remove('active'));
       document.getElementById('info-' + tabName).classList.add('active');
     }
-
     function switchAboutTab(tabName, btn) {
       document.querySelectorAll('#about .tab-btn').forEach(el => el.classList.remove('active'));
       btn.classList.add('active');
       document.querySelectorAll('#about .info-tab-content').forEach(el => el.classList.remove('active'));
       document.getElementById('about-' + tabName).classList.add('active');
     }
-
     function switchDashTab(tabId, btn) {
       document.querySelectorAll('#dashboardModal .tab-btn').forEach(el => el.classList.remove('active'));
       btn.classList.add('active');
@@ -1020,19 +811,15 @@
     function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
 
     function handleLogin() {
-      const user = document.getElementById('username').value;
-      const pass = document.getElementById('password').value;
+      const user = document.getElementById('username').value; const pass = document.getElementById('password').value;
       if (user !== '' && pass !== '') {
         closeModal('loginModal');
         document.getElementById('username').value = ''; document.getElementById('password').value = '';
         document.getElementById('loginError').style.display = 'none';
         setTimeout(() => openModal('dashboardModal'), 300);
-      } else {
-        document.getElementById('loginError').style.display = 'block';
-      }
+      } else { document.getElementById('loginError').style.display = 'block'; }
     }
 
-    // Init
     renderAll();
   </script>
 </body>
