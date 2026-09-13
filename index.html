@@ -31,7 +31,7 @@
     color: var(--text-main); 
     line-height: 1.6; 
   }
-  a { color: inherit; text-decoration: none; }
+  a { color: inherit; text-decoration: none; transition: var(--transition); }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
   img { max-width: 100%; display: block; }
   
@@ -63,16 +63,16 @@
     align-items: center;
     height: 80px;
   }
-  .brand { display: flex; align-items: center; gap: 15px; cursor: pointer; }
+  .brand { display: flex; align-items: center; gap: 15px; cursor: pointer; overflow: hidden; }
   
   /* FIXED LOGO SIZE */
+  .brand-logo-container {
+    width: 45px; height: 45px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--navy-bg); border-radius: 4px; overflow: hidden;
+  }
   .brand-logo { 
-    width: 45px !important; 
-    height: 45px !important; 
-    max-width: 45px !important;
-    max-height: 45px !important;
-    object-fit: contain; 
-    border-radius: 4px;
+    width: 100%; height: 100%; object-fit: contain; 
   }
   
   .brand-text { display: flex; flex-direction: column; }
@@ -82,9 +82,9 @@
   nav { display: flex; gap: 20px; height: 100%; align-items: center; }
   .nav-item { position: relative; height: 100%; display: flex; align-items: center; }
   .nav-item > button {
-    font-size: 15px; font-weight: 500; color: var(--text-main);
+    font-size: 14px; font-weight: 500; color: var(--text-main);
     padding: 10px; transition: var(--transition);
-    display: flex; align-items: center; gap: 5px;
+    display: flex; align-items: center; gap: 5px; white-space: nowrap;
   }
   .nav-item > button:hover, .nav-item > button.active { color: var(--gold-primary); }
   
@@ -129,11 +129,17 @@
   /* ===== TICKER (YELLOW LINE) ===== */
   .ticker {
     background: var(--gold-primary); color: var(--navy-bg);
-    padding: 8px 5%; font-size: 13px; font-weight: 600;
-    display: flex; gap: 20px; overflow: hidden; align-items: center;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 0 5%; height: 35px; font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; border-top: 1px solid rgba(0,0,0,0.1);
   }
-  .ticker-label { flex-shrink: 0; padding-right: 15px; border-right: 1px solid rgba(0,0,0,0.2); text-transform: uppercase; letter-spacing: 1px;}
+  .ticker-label { 
+    flex-shrink: 0; padding-right: 15px; border-right: 1px solid rgba(0,0,0,0.2); 
+    text-transform: uppercase; letter-spacing: 1px; background: var(--gold-primary);
+    z-index: 2; display: flex; align-items: center; height: 100%;
+  }
+  .ticker-scroll-area {
+    flex: 1; overflow: hidden; height: 100%; display: flex; align-items: center; margin-left: 15px;
+  }
   .ticker-content { display: flex; gap: 40px; animation: scroll 30s linear infinite; white-space: nowrap; }
   @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
@@ -141,6 +147,8 @@
   main { padding: 40px 5%; min-height: 70vh; }
   .view-section { display: none; animation: fadeIn 0.4s ease; }
   .view-section.active { display: block; }
+  .info-tab-content { display: none; animation: fadeIn 0.4s ease; }
+  .info-tab-content.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   /* ===== COMPONENTS ===== */
@@ -149,7 +157,7 @@
   /* Cards */
   .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
   .card {
-    background: var(--navy-card); border: 1px solid var(--navy-border);
+    background: var(--navy-card); border: 1px solid var(--navy-border); cursor: pointer;
     border-radius: var(--radius); overflow: hidden; transition: var(--transition);
   }
   .card:hover { border-color: var(--gold-primary); transform: translateY(-5px); }
@@ -158,6 +166,9 @@
   .card-content { padding: 20px; }
   .card-category { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--gold-primary); margin-bottom: 10px; font-weight: 600;}
   .card-title { font-size: 18px; margin-bottom: 10px; line-height: 1.3; }
+  /* Headline link that redirects externally */
+  .headline-link { color: var(--text-main); text-decoration: none; position: relative; z-index: 2; transition: var(--transition); }
+  .headline-link:hover { color: var(--gold-primary); text-decoration: underline; }
   .card-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 15px; }
   .card-meta { font-size: 12px; color: var(--text-muted); display: flex; justify-content: space-between; }
 
@@ -246,6 +257,19 @@
   .dash-view { display: none; }
   .dash-view.active { display: block; }
   
+  .ticker-list-item { 
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--navy-bg); padding: 10px; margin-bottom: 8px; 
+    border: 1px dashed var(--navy-border); border-radius: 4px; font-size: 13px;
+  }
+
+  /* ===== FULL ARTICLE MODAL (INTERNAL READ) ===== */
+  .article-modal { max-width: 700px; padding: 40px; }
+  .article-modal h1 { font-size: 32px; color: var(--gold-primary); margin-bottom: 15px; }
+  .article-modal-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 25px; display: flex; gap: 15px;}
+  .article-modal-img { width: 100%; max-height: 350px; object-fit: cover; border-radius: var(--radius); margin-bottom: 25px;}
+  .article-modal-content { font-size: 16px; line-height: 1.8; color: var(--text-main); white-space: pre-line; }
+
   /* ===== FOOTER ===== */
   footer {
     background: #050a15; border-top: 1px solid var(--navy-border);
@@ -253,7 +277,7 @@
   }
   .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 40px; text-align: left; }
   .footer-col h3 { color: var(--gold-primary); margin-bottom: 20px; font-size: 18px; }
-  .footer-col a { display: block; color: var(--text-muted); margin-bottom: 10px; font-size: 14px; }
+  .footer-col a { display: block; color: var(--text-muted); margin-bottom: 10px; font-size: 14px; cursor: pointer; }
   .footer-col a:hover { color: var(--gold-hover); }
 </style>
 </head>
@@ -273,10 +297,12 @@
   <!-- HEADER -->
   <header>
     <div class="brand" onclick="switchView('home')">
-      <!-- Fixed the logo by strictly assigning the 'brand-logo' class and actual file name -->
-      <img class="brand-logo" src="hikmah logo.png" alt="Hikmah Logo">
+      <!-- Fixed Logo with robust fallback handling -->
+      <div class="brand-logo-container">
+        <img class="brand-logo" src="hikmah logo.png" alt="Logo" onerror="this.style.display='none'">
+      </div>
       <div class="brand-text">
-        <strong>Hikmah</strong>
+        <strong>Hikmah Communication</strong>
         <small>MYSverse News</small>
       </div>
     </div>
@@ -303,6 +329,7 @@
         <button id="btn-info" onclick="switchView('information')">Information ▾</button>
         <div class="dropdown">
           <button onclick="switchView('information', 'Documentary')">🎬 Documentary</button>
+          <button onclick="switchView('information', 'Announcement')">📢 Announcement</button>
           <button onclick="switchView('information', 'Notice')">📋 Notice</button>
         </div>
       </div>
@@ -321,16 +348,18 @@
   <!-- TICKER (Yellow Line under header) -->
   <div class="ticker">
     <div class="ticker-label"><span class="live-dot" style="background-color: var(--navy-bg);"></span> LIVE BRIEFING</div>
-    <div class="ticker-content" id="publicTickerText">
-      <span>Parliament session opens — all eyes on the Budget debate</span>
-      <span>•</span>
-      <span>Hikmah Economy: MYSverse Cabinet reshuffle expected next month</span>
-      <span>•</span>
-      <span>Hikmah Politics: Opposition leader issues statement on reform</span>
-      <span>•</span>
-      <span>Hikmah Sport: RBAM appoints new national badminton coach</span>
-      <span>•</span>
-      <span>Hikmah Insider: New digital platform launched for reporters</span>
+    <div class="ticker-scroll-area">
+      <div class="ticker-content" id="publicTickerText">
+        <span>Parliament session opens — all eyes on the Budget debate</span>
+        <span>•</span>
+        <span>Hikmah Economy: MYSverse Cabinet reshuffle expected next month</span>
+        <span>•</span>
+        <span>Hikmah Politics: Opposition leader issues statement on reform</span>
+        <span>•</span>
+        <span>Hikmah Sport: RBAM appoints new national badminton coach</span>
+        <span>•</span>
+        <span>Hikmah Insider: New digital platform launched for reporters</span>
+      </div>
     </div>
   </div>
 
@@ -338,7 +367,7 @@
     <!-- ===== HOME VIEW ===== -->
     <div id="home" class="view-section active">
       
-      <!-- HERO BANNER REVAMP -->
+      <!-- HERO BANNER -->
       <div class="hero-banner">
         <div class="hero-content">
           <div class="hero-kicker">Ro-Politics / Banner &bull; <span id="heroDate">13 Sep 2026</span> &bull; 7 Min Read</div>
@@ -348,7 +377,7 @@
             <div class="author-avatar">HC</div>
             <div class="author-info">By <strong>Hikmah desk</strong> &bull; Cover story</div>
           </div>
-          <div class="read-more" onclick="switchView('news')">Read the full story ↗</div>
+          <div class="read-more" onclick="switchView('news')">Explore Latest News ↗</div>
         </div>
         <div class="hero-image">
           <div class="hero-image-caption">
@@ -358,7 +387,7 @@
         </div>
       </div>
 
-      <!-- Live Announcement Area (Embedded YouTube) -->
+      <!-- Live Announcement Area (Embedded YouTube) & Quick News -->
       <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; margin-top: 50px;">
         <div>
           <h2 class="section-title"><span class="live-dot"></span> Live Announcement</h2>
@@ -374,22 +403,29 @@
         <div>
           <h2 class="section-title">Latest News</h2>
           <div style="display: flex; flex-direction: column; gap: 15px;">
-            <div class="card" onclick="switchView('news', 'Hikmah Politics')">
+            <div class="card" onclick="openInternalNews('news1')">
               <div class="card-content" style="padding: 15px;">
                 <div class="card-category">🏛 Hikmah Politics</div>
-                <div class="card-title serif" style="font-size: 16px;">Opposition Leader calls for emergency sitting</div>
+                <div class="card-title serif" style="font-size: 16px;">
+                  <a href="https://example.com/politics" target="_blank" onclick="event.stopPropagation()" class="headline-link">Opposition Leader calls for emergency sitting</a>
+                </div>
+                <div class="card-meta"><span>Click title for external link, click card to read inside.</span></div>
               </div>
             </div>
-            <div class="card" onclick="switchView('news', 'Hikmah Sport')">
+            <div class="card" onclick="openInternalNews('news2')">
               <div class="card-content" style="padding: 15px;">
                 <div class="card-category">⚽ Hikmah Sport</div>
-                <div class="card-title serif" style="font-size: 16px;">RBAM League: Semifinals results released</div>
+                <div class="card-title serif" style="font-size: 16px;">
+                  <a href="https://example.com/sports" target="_blank" onclick="event.stopPropagation()" class="headline-link">RBAM League: Semifinals results released</a>
+                </div>
               </div>
             </div>
-            <div class="card" onclick="switchView('news', 'Hikmah Highlights')">
+            <div class="card" onclick="openInternalNews('news3')">
               <div class="card-content" style="padding: 15px;">
                 <div class="card-category">✨ Hikmah Highlights</div>
-                <div class="card-title serif" style="font-size: 16px;">Yang di-Pertuan Agong attends ceremony</div>
+                <div class="card-title serif" style="font-size: 16px;">
+                  <a href="https://example.com/highlights" target="_blank" onclick="event.stopPropagation()" class="headline-link">Yang di-Pertuan Agong attends ceremony</a>
+                </div>
               </div>
             </div>
           </div>
@@ -411,7 +447,6 @@
           </div>
           <div class="reel-meta">Royal Address</div>
         </div>
-        <!-- More reels will be added here via reporter desk -->
       </div>
     </div>
 
@@ -440,15 +475,32 @@
       <h1 class="section-title">Information Center</h1>
       <div class="tab-container">
         <button class="tab-btn active" onclick="switchInfoTab('Documentary', this)">Documentary</button>
+        <button class="tab-btn" onclick="switchInfoTab('Announcement', this)">Announcement</button>
         <button class="tab-btn" onclick="switchInfoTab('Notice', this)">Notice</button>
       </div>
       
-      <div id="info-content">
-        <!-- Default Content -->
+      <!-- Doc Tab -->
+      <div id="info-Documentary" class="info-tab-content active">
         <h2 class="serif text-gold" style="margin-bottom: 20px;">Documentaries</h2>
         <div class="card-grid">
           <div class="card"><div class="card-content"><div class="card-title serif">The Corridors of Power</div><div class="card-desc">Inside MYSverse Parliament.</div></div></div>
           <div class="card"><div class="card-content"><div class="card-title serif">Tracing Roots</div><div class="card-desc">History of Ro-Nations.</div></div></div>
+        </div>
+      </div>
+      
+      <!-- Announce Tab -->
+      <div id="info-Announcement" class="info-tab-content">
+        <h2 class="serif text-gold" style="margin-bottom: 20px;">Public Announcements</h2>
+        <div class="card-grid" id="announceGridList">
+          <div class="card"><div class="card-content"><div class="card-category">📢 Announcement</div><div class="card-title serif">Reporter Registration Open</div><div class="card-desc">Apply to join the Hikmah newsroom.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Notice Tab -->
+      <div id="info-Notice" class="info-tab-content">
+        <h2 class="serif text-gold" style="margin-bottom: 20px;">Official Notices</h2>
+        <div class="card-grid">
+          <div class="card"><div class="card-content"><div class="card-category">📋 Notice</div><div class="card-title serif">Site Maintenance Scheduled</div><div class="card-desc">System upgrades on weekend.</div></div></div>
         </div>
       </div>
     </div>
@@ -463,10 +515,38 @@
         <button class="tab-btn" onclick="switchAboutTab('Subscribe', this)">Subscribe</button>
       </div>
       
-      <div id="about-content" style="max-width: 800px;">
+      <!-- Mission -->
+      <div id="about-Mission" class="info-tab-content active" style="max-width: 800px;">
         <h2 class="serif text-gold">Our Mission</h2>
         <br>
         <p>Hikmah Communication exists to bring honest, thoughtful, and contextual news coverage to the MYSverse community. We believe that informed citizens make better decisions, and that good journalism — grounded in Islamic values of truth, fairness, and wisdom — is a form of public service.</p>
+      </div>
+      
+      <!-- Vision -->
+      <div id="about-Vision" class="info-tab-content" style="max-width: 800px;">
+        <h2 class="serif text-gold">Our Vision</h2>
+        <br>
+        <p>To become the most trusted and respected news organization in the MYSverse — a platform where journalism is done with wisdom, where every story serves the public interest, and where the community can find reliable information on the issues that shape their virtual nation.</p>
+      </div>
+      
+      <!-- Contact -->
+      <div id="about-Contact" class="info-tab-content" style="max-width: 500px;">
+        <h2 class="serif text-gold">Contact Desk</h2>
+        <br>
+        <div class="form-group"><input type="text" placeholder="Your Name"></div>
+        <div class="form-group"><input type="email" placeholder="Your Email"></div>
+        <div class="form-group"><textarea rows="4" placeholder="Your message..."></textarea></div>
+        <button class="btn-submit" onclick="alert('Message sent!')">Send Message ↗</button>
+      </div>
+      
+      <!-- Subscribe -->
+      <div id="about-Subscribe" class="info-tab-content" style="max-width: 500px;">
+        <h2 class="serif text-gold">The Hikmah Brief</h2>
+        <p style="color:var(--text-muted); margin: 10px 0 20px;">One thoughtful email, twice a week. The essential MYSverse news.</p>
+        <div style="display:flex; gap:10px;">
+          <input type="email" style="flex:1; padding:10px; background:var(--navy-bg); color:white; border:1px solid var(--navy-border);" placeholder="Email address">
+          <button class="btn-submit" style="width:auto;" onclick="alert('Subscribed!')">Subscribe</button>
+        </div>
       </div>
     </div>
   </main>
@@ -475,23 +555,24 @@
   <footer>
     <div class="footer-grid">
       <div class="footer-col" style="display: flex; flex-direction: column; gap: 15px;">
-        <!-- Fixed the logo in footer as well -->
-        <img class="brand-logo" src="hikmah logo.png" alt="Hikmah Logo">
+        <div class="brand-logo-container" style="width: 45px; height: 45px; background: var(--navy-bg);">
+          <img class="brand-logo" src="hikmah logo.png" alt="" onerror="this.style.display='none'">
+        </div>
         <h3 class="serif" style="margin-bottom: 5px;">Hikmah Communication</h3>
         <p>MYSverse news for Ro-Politics and public life.<br>Inspiring Through Words, Guiding With Wisdom.</p>
       </div>
       <div class="footer-col">
         <h3 class="serif">Explore</h3>
-        <a href="#" onclick="switchView('home')">Home</a>
-        <a href="#" onclick="switchView('news')">News</a>
-        <a href="#" onclick="switchView('information')">Information</a>
-        <a href="#" onclick="switchView('about')">About Us</a>
+        <a onclick="switchView('home')">Home</a>
+        <a onclick="switchView('news')">News</a>
+        <a onclick="switchView('information')">Information</a>
+        <a onclick="switchView('about')">About Us</a>
       </div>
       <div class="footer-col">
         <h3 class="serif">Connect</h3>
-        <a href="#" onclick="switchView('about', 'Contact')">Contact Desk</a>
+        <a onclick="switchView('about', 'Contact')">Contact Desk</a>
         <a href="#">YouTube Channel</a>
-        <a href="#" onclick="openModal('loginModal')">Reporter Desk</a>
+        <a onclick="openModal('loginModal')">Reporter Desk</a>
       </div>
     </div>
     <div style="border-top: 1px solid var(--navy-border); padding-top: 20px; font-size: 12px;">
@@ -550,20 +631,34 @@
           </div>
         </div>
         <div class="form-group">
+          <label>Thumbnail Image URL (Website Read)</label>
+          <input type="text" placeholder="https://... (Image for the article body)">
+        </div>
+        <div class="form-group">
+          <label>External Link URL (Click Headline)</label>
+          <input type="text" placeholder="https://... (Optional. If blank, headline click does nothing)">
+        </div>
+        <div class="form-group">
           <label>Article Content / Standfirst</label>
-          <textarea rows="4" placeholder="Brief context..."></textarea>
+          <textarea rows="4" placeholder="Full article content..."></textarea>
         </div>
         <button class="btn-submit" onclick="alert('News published successfully!')">Publish Article ↗</button>
       </div>
 
-      <!-- Dash Tab: Update Ticker -->
+      <!-- Dash Tab: Update Ticker (List Builder) -->
       <div id="dash-ticker" class="dash-view">
         <div class="form-group">
-          <label>Ticker Text (Tulisan Bergerak)</label>
-          <textarea id="dashTickerInput" rows="3" placeholder="Enter new ticker text here. Use ' • ' to separate news points."></textarea>
+          <label>Add Ticker Item</label>
+          <div style="display:flex; gap:10px;">
+            <input type="text" id="dashTickerInput" placeholder="e.g. Sultan declares public holiday">
+            <button class="btn-submit" style="width:100px;" onclick="addTickerItem()">Add +</button>
+          </div>
         </div>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">This will instantly update the yellow scrolling bar below the header.</p>
-        <button class="btn-submit" onclick="updateTicker()">Update Ticker ↗</button>
+        <div id="tickerPreviewList" style="margin-bottom: 20px;">
+          <!-- Ticker items will appear here -->
+        </div>
+        <button class="btn-submit" style="background:var(--navy-border); color:white;" onclick="clearTickerList()">Clear List</button>
+        <button class="btn-submit" style="margin-top: 10px;" onclick="publishTicker()">Publish Ticker ↗</button>
       </div>
 
       <!-- Dash Tab: Live Update -->
@@ -600,60 +695,81 @@
       <div id="dash-announce" class="dash-view">
         <div class="form-group">
           <label>Announcement Title</label>
-          <input type="text" placeholder="Important Notice">
+          <input type="text" id="dashAnnounceTitle" placeholder="Important Notice">
         </div>
         <div class="form-group">
           <label>Message Content</label>
-          <textarea rows="4" placeholder="Type the announcement here..."></textarea>
+          <textarea id="dashAnnounceDesc" rows="4" placeholder="Type the announcement here..."></textarea>
         </div>
-        <button class="btn-submit" onclick="alert('Announcement broadcasted!')">Publish Announcement ↗</button>
+        <button class="btn-submit" onclick="publishAnnouncement()">Publish Announcement ↗</button>
       </div>
+    </div>
+  </div>
 
+  <!-- ARTICLE READER MODAL (INTERNAL) -->
+  <div class="modal-overlay" id="articleModal">
+    <div class="modal-content article-modal">
+      <span class="modal-close" onclick="closeModal('articleModal')">×</span>
+      <div id="articleModalCategory" style="color: var(--gold-primary); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; font-weight:bold;">Category</div>
+      <h1 id="articleModalTitle">Article Title</h1>
+      <div class="article-modal-meta">
+        <span>By Hikmah Desk</span>
+        <span id="articleModalDate">Date</span>
+      </div>
+      <img id="articleModalImage" class="article-modal-img" src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80" alt="News Image">
+      <div id="articleModalContent" class="article-modal-content">
+        Article content goes here...
+      </div>
     </div>
   </div>
 
   <script>
-    // Formatting Current Date for Topbar & Hero Banner
+    // System Date
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const shortDateOptions = { day: 'numeric', month: 'short', year: 'numeric' };
     const today = new Date();
     document.getElementById('currentDate').innerText = today.toLocaleDateString('en-MY', dateOptions);
     document.getElementById('heroDate').innerText = today.toLocaleDateString('en-MY', shortDateOptions).toUpperCase();
 
-    // View Switcher
+    // View Navigation
     function switchView(viewId, subCategory = null) {
       document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
       document.getElementById(viewId).classList.add('active');
       
+      // Update Navbar active state
       document.querySelectorAll('nav .nav-item > button').forEach(el => el.classList.remove('active'));
       document.getElementById('btn-' + (viewId === 'information' ? 'info' : viewId)).classList.add('active');
 
-      if (viewId === 'news' && subCategory) {
-        let tabs = document.querySelectorAll('#news .tab-btn');
-        tabs.forEach(tab => {
-          if(tab.innerText.includes(subCategory.replace('Hikmah ', ''))) filterCategory(subCategory, tab);
-        });
-      } else if (viewId === 'news' && !subCategory) {
-        filterCategory('All', document.querySelector('#news .tab-btn'));
+      if (viewId === 'news') {
+        if(subCategory) {
+          let tabs = document.querySelectorAll('#news .tab-btn');
+          tabs.forEach(tab => { if(tab.innerText.includes(subCategory.replace('Hikmah ', ''))) filterCategory(subCategory, tab); });
+        } else {
+          filterCategory('All', document.querySelector('#news .tab-btn'));
+        }
+      }
+
+      if (viewId === 'information' && subCategory) {
+        let tabs = document.querySelectorAll('#information .tab-btn');
+        tabs.forEach(tab => { if(tab.innerText.includes(subCategory)) switchInfoTab(subCategory, tab); });
+      }
+
+      if (viewId === 'about' && subCategory) {
+        let tabs = document.querySelectorAll('#about .tab-btn');
+        tabs.forEach(tab => { if(tab.innerText.includes(subCategory)) switchAboutTab(subCategory, tab); });
       }
 
       window.scrollTo(0, 0);
     }
 
-    // Modal Handlers
-    function openModal(modalId) {
-      document.getElementById(modalId).classList.add('active');
-    }
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.remove('active');
-    }
+    // Modal Control
+    function openModal(modalId) { document.getElementById(modalId).classList.add('active'); }
+    function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
 
-    // Reporter Login Logic
+    // Login
     function handleLogin() {
       const user = document.getElementById('username').value;
       const pass = document.getElementById('password').value;
-      
-      // Just for demo purposes, you can put your real credentials here
       if (user !== '' && pass !== '') {
         closeModal('loginModal');
         document.getElementById('username').value = '';
@@ -673,20 +789,55 @@
       document.getElementById('dash-' + tabId).classList.add('active');
     }
 
-    // Dynamic Publish Functions
-    function updateTicker() {
-      const newText = document.getElementById('dashTickerInput').value;
-      if(newText.trim() === '') return alert('Please enter some text for the ticker.');
-      
-      const tickerContainer = document.getElementById('publicTickerText');
-      // Create a seamless span string based on the input. We'll duplicate it a bit to ensure smooth scrolling.
-      const contentStr = `<span>${newText}</span> <span>•</span> <span>${newText}</span> <span>•</span> <span>${newText}</span>`;
-      tickerContainer.innerHTML = contentStr;
-      
-      alert('Ticker successfully updated!');
+    // Ticker Logic (List Builder)
+    let tickerArray = [];
+    
+    function addTickerItem() {
+      const val = document.getElementById('dashTickerInput').value;
+      if(!val.trim()) return;
+      tickerArray.push(val);
+      renderTickerPreview();
       document.getElementById('dashTickerInput').value = '';
     }
 
+    function renderTickerPreview() {
+      const list = document.getElementById('tickerPreviewList');
+      list.innerHTML = '';
+      tickerArray.forEach((item, index) => {
+        list.innerHTML += `
+          <div class="ticker-list-item">
+            <span>${item}</span>
+            <button onclick="removeTickerItem(${index})" style="color:var(--red-live); font-size:16px;">✖</button>
+          </div>
+        `;
+      });
+    }
+
+    function removeTickerItem(index) {
+      tickerArray.splice(index, 1);
+      renderTickerPreview();
+    }
+
+    function clearTickerList() {
+      tickerArray = [];
+      renderTickerPreview();
+    }
+
+    function publishTicker() {
+      if(tickerArray.length === 0) return alert('Add at least one item to publish.');
+      
+      const tickerContainer = document.getElementById('publicTickerText');
+      // Wrap items in spans and join with bullets
+      const contentStr = tickerArray.map(txt => `<span>${txt}</span>`).join(' <span>•</span> ');
+      
+      // Duplicate it twice or thrice to ensure smooth infinite marquee
+      tickerContainer.innerHTML = `${contentStr} <span>•</span> ${contentStr} <span>•</span> ${contentStr}`;
+      
+      alert('Ticker successfully updated!');
+      closeModal('dashboardModal');
+    }
+
+    // Publish Live
     function publishLive() {
       const title = document.getElementById('dashLiveTitle').value || 'Live Event';
       const desc = document.getElementById('dashLiveDesc').value || 'Streaming now...';
@@ -696,12 +847,13 @@
       document.getElementById('home-live-desc').innerText = desc;
       document.getElementById('home-live-video').innerHTML = `<iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" src="https://www.youtube-nocookie.com/embed/${urlId}?autoplay=1&mute=1" allowfullscreen></iframe>`;
       
-      alert('Live stream successfully pushed to Home Page!');
+      alert('Live stream published to Home Page!');
       document.getElementById('dashLiveTitle').value = '';
       document.getElementById('dashLiveDesc').value = '';
       document.getElementById('dashLiveUrl').value = '';
     }
 
+    // Publish Reel
     function publishReel() {
       const title = document.getElementById('dashReelTitle').value || 'New Reel';
       const urlId = document.getElementById('dashReelUrl').value || 'jNQXAC9IVRw';
@@ -716,17 +868,38 @@
         </div>`;
       
       grid.insertAdjacentHTML('afterbegin', newReel);
-      alert('Reel successfully published to Home Page!');
+      alert('Reel published to Home Page!');
       document.getElementById('dashReelTitle').value = '';
       document.getElementById('dashReelUrl').value = '';
     }
 
-    // News Filter Logic
+    // Publish Announcement
+    function publishAnnouncement() {
+      const title = document.getElementById('dashAnnounceTitle').value || 'New Notice';
+      const desc = document.getElementById('dashAnnounceDesc').value || 'Details here...';
+      
+      const grid = document.getElementById('announceGridList');
+      const newAnnounce = `
+        <div class="card">
+          <div class="card-content">
+            <div class="card-category">📢 Announcement</div>
+            <div class="card-title serif">${title}</div>
+            <div class="card-desc">${desc}</div>
+          </div>
+        </div>`;
+      
+      grid.insertAdjacentHTML('afterbegin', newAnnounce);
+      alert('Announcement published to Information tab!');
+      document.getElementById('dashAnnounceTitle').value = '';
+      document.getElementById('dashAnnounceDesc').value = '';
+    }
+
+    // News Internal Reading & External Linking Logic
     const newsData = [
-      { cat: 'Hikmah Politics', title: 'Parliament session opens', desc: 'All eyes on the Budget debate.' },
-      { cat: 'Hikmah Sport', title: 'National Badminton Coach', desc: 'RBAM appoints new head.' },
-      { cat: 'Hikmah Insider', title: 'New System Launched', desc: 'Reporters receive new digital platform.' },
-      { cat: 'Hikmah Economy', title: 'Cabinet Reshuffle', desc: 'Market reacts to rumored changes.' }
+      { id: 'n1', cat: 'Hikmah Politics', title: 'Parliament session opens', desc: 'All eyes on the Budget debate.', externalLink: 'https://example.com/politics', content: 'Full details of the budget debate discussing MYSverse allocations for the next fiscal year. The opposition leader raised several questions regarding education and healthcare funding.' },
+      { id: 'n2', cat: 'Hikmah Sport', title: 'National Badminton Coach', desc: 'RBAM appoints new head.', externalLink: 'https://example.com/sports', content: 'The new coach promises a rigorous training regimen ahead of the regional championships.' },
+      { id: 'n3', cat: 'Hikmah Insider', title: 'New System Launched', desc: 'Reporters receive new digital platform.', externalLink: '', content: 'Hikmah Communication has officially rolled out its new portal to streamline news publishing.' },
+      { id: 'n4', cat: 'Hikmah Economy', title: 'Cabinet Reshuffle', desc: 'Market reacts to rumored changes.', externalLink: 'https://example.com/economy', content: 'Investors are closely monitoring the political landscape as rumors of a reshuffle circulate.' }
     ];
 
     function filterCategory(cat, btn) {
@@ -745,17 +918,61 @@
       }
 
       filtered.forEach(news => {
+        // Condition: if external link exists, make headline clickable. Else, simple text.
+        const headlineHTML = news.externalLink 
+          ? `<a href="${news.externalLink}" target="_blank" onclick="event.stopPropagation()" class="headline-link">${news.title}</a>`
+          : `<span style="color:var(--text-main);">${news.title}</span>`;
+
         grid.innerHTML += `
-          <div class="card">
+          <div class="card" onclick="openInternalArticle('${news.id}')">
             <div class="card-content">
               <div class="card-category">${news.cat}</div>
-              <div class="card-title serif">${news.title}</div>
+              <div class="card-title serif">${headlineHTML}</div>
               <div class="card-desc">${news.desc}</div>
-              <div class="card-meta"><span class="text-gold">Read Article ↗</span></div>
+              <div class="card-meta"><span class="text-gold">Read Full Article ↗</span></div>
             </div>
           </div>
         `;
       });
+    }
+
+    // Open Internal Article Modal
+    function openInternalArticle(id) {
+      const article = newsData.find(n => n.id === id);
+      if(!article) return;
+      
+      document.getElementById('articleModalCategory').innerText = article.cat;
+      document.getElementById('articleModalTitle').innerText = article.title;
+      document.getElementById('articleModalDate').innerText = document.getElementById('currentDate').innerText;
+      document.getElementById('articleModalContent').innerText = article.content;
+      
+      openModal('articleModal');
+    }
+
+    // For hardcoded homepage cards
+    function openInternalNews(id) {
+      const dummyContent = "This is the full article content being read internally on the website. If you had clicked the headline, it would have taken you to an external embedded link.";
+      document.getElementById('articleModalCategory').innerText = "Hikmah News";
+      document.getElementById('articleModalTitle').innerText = "Internal Reading View";
+      document.getElementById('articleModalDate').innerText = document.getElementById('currentDate').innerText;
+      document.getElementById('articleModalContent').innerText = dummyContent;
+      
+      openModal('articleModal');
+    }
+
+    // Tab Switchers for Info & About
+    function switchInfoTab(tabName, btn) {
+      document.querySelectorAll('#information .tab-btn').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#information .info-tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('info-' + tabName).classList.add('active');
+    }
+
+    function switchAboutTab(tabName, btn) {
+      document.querySelectorAll('#about .tab-btn').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#about .info-tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('about-' + tabName).classList.add('active');
     }
 
     // Initialization
