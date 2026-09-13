@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "site": "hikmah-news",
     "ignore": [
       "firebase.json",
       "**/.*",
