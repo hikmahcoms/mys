@@ -47,7 +47,6 @@
     justify-content: space-between;
     font-size: 12px;
     color: var(--text-muted);
-    border-bottom: 1px solid var(--navy-border);
   }
   .topbar-right button { color: var(--gold-primary); margin-left: 15px; transition: var(--transition); }
   .topbar-right button:hover { color: var(--text-main); }
@@ -56,7 +55,6 @@
   header {
     background: var(--navy-card);
     padding: 0 5%;
-    border-bottom: 2px solid var(--gold-primary);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -66,7 +64,7 @@
     height: 80px;
   }
   .brand { display: flex; align-items: center; gap: 15px; cursor: pointer; }
-  .brand-logo { width: 35px; height: 35px; border-radius: 4px; object-fit: contain; }
+  .brand-logo { width: 45px !important; height: 45px !important; max-height: 45px; object-fit: contain; }
   .brand-text { display: flex; flex-direction: column; }
   .brand-text strong { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--gold-primary); letter-spacing: 0.5px; line-height: 1;}
   .brand-text small { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px;}
@@ -118,6 +116,17 @@
   }
   @keyframes blink { 50% { opacity: 0.4; transform: scale(1.2); } }
 
+  /* ===== TICKER (YELLOW LINE) ===== */
+  .ticker {
+    background: var(--gold-primary); color: var(--navy-bg);
+    padding: 8px 5%; font-size: 13px; font-weight: 600;
+    display: flex; gap: 20px; overflow: hidden; align-items: center;
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+  .ticker-label { flex-shrink: 0; padding-right: 15px; border-right: 1px solid rgba(0,0,0,0.2); text-transform: uppercase; letter-spacing: 1px;}
+  .ticker-content { display: flex; gap: 40px; animation: scroll 30s linear infinite; white-space: nowrap; }
+  @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
   /* ===== MAIN CONTAINER ===== */
   main { padding: 40px 5%; min-height: 70vh; }
   .view-section { display: none; animation: fadeIn 0.4s ease; }
@@ -142,17 +151,47 @@
   .card-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 15px; }
   .card-meta { font-size: 12px; color: var(--text-muted); display: flex; justify-content: space-between; }
 
-  /* Hero Banner */
+  /* Hero Banner Revamp */
   .hero-banner {
-    display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; margin-bottom: 50px;
-    background: linear-gradient(145deg, var(--navy-card), #0a1329);
-    border: 1px solid var(--gold-primary); border-radius: var(--radius); overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 50px;
+    background: var(--navy-bg);
+    border: 1px solid var(--navy-border); border-radius: var(--radius); overflow: hidden;
+    min-height: 400px;
   }
-  .hero-content { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
-  .hero-content h1 { font-size: 38px; line-height: 1.1; margin: 15px 0; }
-  .hero-content p { font-size: 15px; color: var(--text-muted); margin-bottom: 25px; }
-  .hero-image { background: url('https://images.unsplash.com/photo-1577983088210-9171738cbe22?auto=format&fit=crop&w=800&q=80') center/cover; min-height: 300px; }
+  .hero-content {
+    padding: 50px; display: flex; flex-direction: column; justify-content: center;
+    background: var(--navy-card); 
+  }
+  .hero-kicker { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-primary); margin-bottom: 20px; font-weight: 600;}
+  .hero-content h1 { font-size: 42px; line-height: 1.1; margin: 0 0 20px 0; color: var(--text-main); }
+  .hero-content h1 span { color: var(--gold-primary); font-style: italic; }
+  .hero-content p { font-size: 15px; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; max-width: 95%; }
   
+  .hero-author { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; font-size: 13px; }
+  .author-avatar { width: 35px; height: 35px; border-radius: 50%; background: var(--gold-primary); color: var(--navy-bg); display: flex; align-items: center; justify-content: center; font-weight: bold; }
+  .author-info { display: flex; gap: 15px; align-items: center; color: var(--text-muted); }
+  .author-info strong { color: var(--text-main); }
+  
+  .read-more { color: var(--gold-primary); font-weight: 600; font-size: 14px; text-decoration: none; border-bottom: 1px solid var(--gold-primary); padding-bottom: 2px; width: max-content; transition: var(--transition); cursor: pointer;}
+  .read-more:hover { color: var(--gold-hover); border-color: var(--gold-hover); }
+
+  .hero-image {
+    background: url('https://images.unsplash.com/photo-1577983088210-9171738cbe22?auto=format&fit=crop&w=800&q=80') center/cover;
+    position: relative;
+  }
+  .hero-image-caption {
+    position: absolute; bottom: 20px; left: 20px; right: 20px;
+    display: flex; justify-content: space-between;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  }
+
+  @media (max-width: 768px) {
+    .hero-banner { grid-template-columns: 1fr; }
+    .hero-image { min-height: 250px; }
+    .hero-content { padding: 30px; }
+    .hero-content h1 { font-size: 32px; }
+  }
+
   /* Tabs */
   .tab-container { margin-bottom: 30px; display: flex; gap: 10px; border-bottom: 1px solid var(--navy-border); padding-bottom: 10px; overflow-x: auto;}
   .tab-btn { padding: 8px 18px; color: var(--text-muted); font-size: 14px; border-radius: 20px; transition: var(--transition); border: 1px solid transparent; white-space: nowrap;}
@@ -268,10 +307,10 @@
     </nav>
   </header>
 
-  <!-- TICKER -->
+  <!-- TICKER (Yellow Line under header) -->
   <div class="ticker">
-    <div class="ticker-label"><span class="live-dot"></span> LIVE BRIEFING</div>
-    <div class="ticker-content">
+    <div class="ticker-label"><span class="live-dot" style="background-color: var(--navy-bg);"></span> LIVE BRIEFING</div>
+    <div class="ticker-content" id="publicTickerText">
       <span>Parliament session opens — all eyes on the Budget debate</span>
       <span>•</span>
       <span>Hikmah Economy: MYSverse Cabinet reshuffle expected next month</span>
@@ -287,16 +326,25 @@
   <main>
     <!-- ===== HOME VIEW ===== -->
     <div id="home" class="view-section active">
+      
+      <!-- HERO BANNER REVAMP -->
       <div class="hero-banner">
         <div class="hero-content">
-          <span style="color: var(--gold-primary); font-weight: bold; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;"><span class="live-dot"></span> Breaking News</span>
-          <h1>The public square is changing. <span style="font-style: italic;">Who gets a say?</span></h1>
-          <p>Hikmah Communication covers Ro-Politics, royal affairs, and public life in MYSverse — with clarity, integrity, and a commitment to truth.</p>
-          <div>
-            <button class="btn-login" onclick="switchView('news')">Read Full Story ↗</button>
+          <div class="hero-kicker">Ro-Politics / Banner &bull; <span id="heroDate">13 Sep 2026</span> &bull; 7 Min Read</div>
+          <h1>The public square is changing. <span>Who gets a say?</span></h1>
+          <p>Hikmah Communication reads the MYSverse for the politics, people, and public life shaping the nation — with context, care, and a little courage.</p>
+          <div class="hero-author">
+            <div class="author-avatar">HC</div>
+            <div class="author-info">By <strong>Hikmah desk</strong> &bull; Cover story</div>
+          </div>
+          <div class="read-more" onclick="switchView('news')">Read the full story ↗</div>
+        </div>
+        <div class="hero-image">
+          <div class="hero-image-caption">
+            <span>MYSverse, Malaysia</span>
+            <span>Photo Essay / Hikmah</span>
           </div>
         </div>
-        <div class="hero-image"></div>
       </div>
 
       <!-- Live Announcement Area (Embedded YouTube) -->
@@ -466,10 +514,10 @@
       
       <div class="tab-container">
         <button class="tab-btn active" onclick="switchDashTab('publish', this)">Publish News</button>
+        <button class="tab-btn" onclick="switchDashTab('ticker', this)">Update Ticker</button>
         <button class="tab-btn" onclick="switchDashTab('live-update', this)">Publish Live</button>
         <button class="tab-btn" onclick="switchDashTab('reels', this)">Publish Reel</button>
         <button class="tab-btn" onclick="switchDashTab('announce', this)">Announcement</button>
-        <button class="tab-btn" onclick="switchDashTab('manage', this)">Manage</button>
       </div>
 
       <!-- Dash Tab: Publish News -->
@@ -493,6 +541,16 @@
           <textarea rows="4" placeholder="Brief context..."></textarea>
         </div>
         <button class="btn-submit" onclick="alert('News published successfully!')">Publish Article ↗</button>
+      </div>
+
+      <!-- Dash Tab: Update Ticker -->
+      <div id="dash-ticker" class="dash-view">
+        <div class="form-group">
+          <label>Ticker Text (Tulisan Bergerak)</label>
+          <textarea id="dashTickerInput" rows="3" placeholder="Enter new ticker text here. Use ' • ' to separate news points."></textarea>
+        </div>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">This will instantly update the yellow scrolling bar below the header.</p>
+        <button class="btn-submit" onclick="updateTicker()">Update Ticker ↗</button>
       </div>
 
       <!-- Dash Tab: Live Update -->
@@ -538,25 +596,16 @@
         <button class="btn-submit" onclick="alert('Announcement broadcasted!')">Publish Announcement ↗</button>
       </div>
 
-      <!-- Dash Tab: Manage -->
-      <div id="dash-manage" class="dash-view">
-        <div class="story-list-item">
-          <div><strong class="text-gold">Hikmah Politics</strong> | Opposition Leader calls for...</div>
-          <button style="color: var(--red-live); font-size: 13px;">Delete</button>
-        </div>
-        <div class="story-list-item">
-          <div><strong class="text-gold">Hikmah Sport</strong> | RBAM League Semifinals...</div>
-          <button style="color: var(--red-live); font-size: 13px;">Delete</button>
-        </div>
-      </div>
-
     </div>
   </div>
 
   <script>
-    // Set Current Date
+    // Formatting Current Date for Topbar & Hero Banner
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-MY', dateOptions);
+    const shortDateOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+    const today = new Date();
+    document.getElementById('currentDate').innerText = today.toLocaleDateString('en-MY', dateOptions);
+    document.getElementById('heroDate').innerText = today.toLocaleDateString('en-MY', shortDateOptions).toUpperCase();
 
     // View Switcher
     function switchView(viewId, subCategory = null) {
@@ -590,7 +639,6 @@
     function handleLogin() {
       const user = document.getElementById('username').value;
       const pass = document.getElementById('password').value;
-      // In a real app, this is checked securely on the backend
       if (user === 'reporter' && pass === 'hikmah2026') {
         closeModal('loginModal');
         document.getElementById('username').value = '';
@@ -610,11 +658,24 @@
       document.getElementById('dash-' + tabId).classList.add('active');
     }
 
-    // Dynamic publish functions
+    // Dynamic Publish Functions
+    function updateTicker() {
+      const newText = document.getElementById('dashTickerInput').value;
+      if(newText.trim() === '') return alert('Please enter some text for the ticker.');
+      
+      const tickerContainer = document.getElementById('publicTickerText');
+      // Create a seamless span string based on the input. We'll duplicate it a bit to ensure smooth scrolling.
+      const contentStr = `<span>${newText}</span> <span>•</span> <span>${newText}</span> <span>•</span> <span>${newText}</span>`;
+      tickerContainer.innerHTML = contentStr;
+      
+      alert('Ticker successfully updated!');
+      document.getElementById('dashTickerInput').value = '';
+    }
+
     function publishLive() {
       const title = document.getElementById('dashLiveTitle').value || 'Live Event';
       const desc = document.getElementById('dashLiveDesc').value || 'Streaming now...';
-      const urlId = document.getElementById('dashLiveUrl').value || 'ScMzIvxBSi4'; // Dummy fallback
+      const urlId = document.getElementById('dashLiveUrl').value || 'ScMzIvxBSi4'; 
       
       document.getElementById('home-live-title').innerText = title;
       document.getElementById('home-live-desc').innerText = desc;
