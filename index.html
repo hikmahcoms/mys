@@ -625,7 +625,7 @@
     const today = new Date();
     document.getElementById('currentDate').innerText = today.toLocaleDateString('en-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-    // ===== STATE MANAGEMENT (Local Storage) =====
+    // ===== STATE MANAGEMENT (Local Storage & Cross-Tab Sync) =====
     let state = {
       news: JSON.parse(localStorage.getItem('hikmah_news')) || [],
       ticker: JSON.parse(localStorage.getItem('hikmah_ticker')) || [],
@@ -647,6 +647,20 @@
       renderAll();
     }
 
+    // Listen to storage changes across tabs instantly
+    window.addEventListener('storage', (e) => {
+      if (e.key && e.key.startsWith('hikmah_')) {
+        state.news = JSON.parse(localStorage.getItem('hikmah_news')) || [];
+        state.ticker = JSON.parse(localStorage.getItem('hikmah_ticker')) || [];
+        state.reels = JSON.parse(localStorage.getItem('hikmah_reels')) || [];
+        state.announce = JSON.parse(localStorage.getItem('hikmah_announce')) || [];
+        state.notice = JSON.parse(localStorage.getItem('hikmah_notice')) || [];
+        state.docs = JSON.parse(localStorage.getItem('hikmah_docs')) || [];
+        state.live = JSON.parse(localStorage.getItem('hikmah_live')) || null;
+        renderAll();
+      }
+    });
+
     // ===== RENDER FUNCTIONS =====
     function renderAll() {
       renderTicker();
@@ -662,12 +676,12 @@
     function renderTicker() {
       const container = document.getElementById('publicTickerText');
       if (state.ticker.length === 0) {
-        container.innerHTML = `<span style="color:var(--text-muted); font-style:italic;">No live briefing at the moment.</span>`;
+        container.innerHTML = `<span style="color:var(--navy-bg); font-style:italic; font-weight:700;">No live briefing at the moment. Use Ticker updater in Reporter Desk.</span>`;
         return;
       }
       const str = state.ticker.map(t => `<span>${t}</span>`).join(' <span>•</span> ');
       container.innerHTML = `${str} <span>•</span> ${str} <span>•</span> ${str}`;
-      renderTickerPreview(); // for dashboard
+      renderTickerPreview();
     }
 
     function renderNews() {
@@ -795,7 +809,6 @@
         btnElement.classList.add('active');
       }
       
-      // Map short tab names back to full category if needed
       let fullCat = cat;
       if(cat !== 'All' && !cat.includes('Hikmah')) fullCat = 'Hikmah ' + cat;
 
@@ -837,7 +850,7 @@
       document.getElementById('articleModalCategory').innerText = article.cat;
       document.getElementById('articleModalTitle').innerText = article.title;
       document.getElementById('articleModalDate').innerText = article.date;
-      document.getElementById('articleModalContent').innerText = article.desc; // Full text
+      document.getElementById('articleModalContent').innerText = article.desc;
       
       const imgEl = document.getElementById('articleModalImage');
       if(article.img) {
@@ -870,7 +883,6 @@
       saveState();
       alert('Article Published!');
       
-      // clear fields
       document.getElementById('dashNewsTitle').value = '';
       document.getElementById('dashNewsImg').value = '';
       document.getElementById('dashNewsLink').value = '';
