@@ -3,9 +3,6 @@
     "site": "hikmahcoms-mys",
 
     "public": "public",
-    ...
-  }
-}
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
