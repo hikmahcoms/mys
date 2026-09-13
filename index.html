@@ -978,6 +978,28 @@
       saveState();
     }
 
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAsFKmZA1SMU5JDO_lR4mDBX8tqbovrjsk",
+  authDomain: "hikmah-news.firebaseapp.com",
+  projectId: "hikmah-news",
+  storageBucket: "hikmah-news.firebasestorage.app",
+  messagingSenderId: "236875991191",
+  appId: "1:236875991191:web:ec2a8069c3134d1ccf01d2",
+  measurementId: "G-P6XPQCK0KM"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
     // ===== VIEW/TAB LOGIC =====
     function switchView(viewId, subCategory = null) {
       document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
