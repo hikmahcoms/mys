@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "hikmahcoms-mys",
     "public": "public",
     "ignore": [
       "firebase.json",
