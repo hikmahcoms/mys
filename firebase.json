@@ -1,7 +1,11 @@
 {
   "hosting": {
+    "site": "hikmahcoms-mys",
+
     "public": "public",
-    "ignore": [
+    ...
+  }
+}
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
